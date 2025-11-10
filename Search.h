@@ -64,3 +64,20 @@ int minFind(double darray[], ...) {
 }
 
 void newSort(double darray[], int n) {}
+
+
+// Implement Exponential Search
+//    Reuse your iterative binSearch(...) on a narrowed window
+//    Assumes the array is sorted in ascending order
+// Step 1: Handle edge cases (empty array) and quickly check the first element.
+// Step 2: Grow a “bound”: start at 1, then repeatedly double it
+//         while you are still inside the array and the current value is less than the target.
+// Step 3: Define a search window:
+//         - The left edge is halfway back from the current bound.
+//         - The right edge is the smaller of (current bound) and (last valid index).
+// Step 4: Run your existing binSearch on just that window and return its result.
+//         You may pass a pointer to the start of the window and its length,
+//         or copy that window to a temporary buffer if you prefer.
+bool expSearch(float target, float arr[], int n) {
+    return false;
+}

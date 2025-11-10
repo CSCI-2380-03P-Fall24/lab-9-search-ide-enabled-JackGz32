@@ -78,3 +78,38 @@ TEST_CASE("newSort") {
         CHECK(myDarray[i] == sortArr[i]);
     }
 }
+
+TEST_CASE("expSearch") {
+    // basic hits and misses
+    float a[] = {0.6f, 1.0f, 1.4f, 2.2f, 2.3f};
+    REQUIRE_NOTHROW(expSearch(2.2f, a, 5));
+    CHECK(expSearch(2.2f, a, 5) == true);   // middle
+    CHECK(expSearch(0.6f, a, 5) == true);   // first element
+    CHECK(expSearch(2.3f, a, 5) == true);   // last element
+    CHECK(expSearch(2.4f, a, 5) == false);  // larger than max
+    CHECK(expSearch(0.1f, a, 5) == false);  // smaller than min
+
+    // single element
+    float b[] = {3.3f};
+    REQUIRE_NOTHROW(expSearch(3.3f, b, 1));
+    CHECK(expSearch(3.3f, b, 1) == true);
+    CHECK(expSearch(0.0f, b, 1) == false);
+
+    // empty / nullptr-safe
+    float* none = nullptr;
+    REQUIRE_NOTHROW(expSearch(1.0f, none, 0));
+    CHECK(expSearch(1.0f, none, 0) == false);
+
+    // duplicates present
+    float c[] = {1.0f, 2.0f, 2.0f, 2.0f, 5.0f};
+    REQUIRE_NOTHROW(expSearch(2.0f, c, 5));
+    CHECK(expSearch(2.0f, c, 5) == true);   // any occurrence OK
+    CHECK(expSearch(4.0f, c, 5) == false);
+
+    // negatives and larger bounds
+    float d[] = {-10.0f, -3.0f, -1.0f, 0.0f, 4.5f, 8.0f, 12.0f};
+    CHECK(expSearch(-10.0f, d, 7) == true); // first
+    CHECK(expSearch(12.0f, d, 7) == true);  // last
+    CHECK(expSearch(-2.0f, d, 7) == false); // gap miss
+    CHECK(expSearch(100.0f, d, 7) == false);// forces bound past n
+}
